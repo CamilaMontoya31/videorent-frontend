@@ -3,6 +3,8 @@ import { PeliculaSearch } from './peliculas/pelicula-search/pelicula-search';
 
 
 export const routes: Routes = [
-    { path: 'buscar-pelicula', component:PeliculaSearch},
+    { path: '', pathMatch: 'full', redirectTo: 'buscar-pelicula' },
+    { path: 'buscar-pelicula', component: PeliculaSearch },
+    { path: '**', redirectTo: 'buscar-pelicula' },
 
 ];

@@ -1,5 +1,5 @@
-/* my-component.component.css */
-.component-container {
+/* pelicula-search.css */
+.pelicula-search {
   padding: 20px;
   background-color: #f0f0f0;
   border-radius: 5px;
@@ -8,14 +8,14 @@
 button {
   margin: 5px;
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color: #FF69A7;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #FA8CBA;
 }
 .search-page {
   padding: 16px;
@@ -30,7 +30,8 @@ button:hover {
 .search-form {
   margin-bottom: 16px;
 }
-.actions {
+
+.actions{
   display: flex;
   gap: 8px;
   flex-wrap: wrap;

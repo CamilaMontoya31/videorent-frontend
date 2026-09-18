@@ -59,7 +59,7 @@ export class PeliculaSearch {
         finalize(() => this.loading.set(false))
       )
       .subscribe(peliculas => {this.resultados.set(peliculas)
-       console.log("Colletion: ", peliculas);
+      console.log("Colletion: ", peliculas);
       console.log("Signal actualizada: ", this.error());
     
     });

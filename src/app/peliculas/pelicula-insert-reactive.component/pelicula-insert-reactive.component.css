@@ -1,0 +1,69 @@
+
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  background-color: #FF69A7;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #FA8CBA;
+}
+.search-page {
+  padding: 16px;
+}
+.hero {
+  margin-bottom: 16px;
+}
+.eyebrow {
+  margin: 0 0 8px 0;
+  font-weight: bold;
+}
+.search-form {
+  margin-bottom: 16px;
+}
+
+.actions{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+*.field input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #999;
+  box-sizing: border-box;
+}
+.message {
+  margin: 12px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.message.error {
+  color: #b00020;
+}
+
+.table-shell {
+  margin-top: 12px;
+  overflow-x: auto;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.results-table th,
+.results-table td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+.results-table th {
+  background-color: #eaeaea;
+}

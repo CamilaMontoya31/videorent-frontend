@@ -24,14 +24,13 @@
     <label for="estreno">Estreno:</label>
     <input type="checkbox" id="estreno" formControlName="estreno">
   </div>
-
-   <!-- Género -->
+  <!-- Género -->
   <div>
     <label for="genero">Género:</label>
     <select id="genero" formControlName="genero">
       <option [ngValue]="null" disabled>Seleccione un género</option>
-      @for (genero of generos; track genero.generoId) {
-        <option [ngValue]="genero.generoId">{{ genero.nombreGenero }}</option>
+      @for (genero of generos; track genero.id) {
+        <option [ngValue]="genero.id">{{ genero.nombre }}</option>
       }
     </select>
     @if (peliculaForm.get('genero')?.invalid && (peliculaForm.get('genero')?.dirty || peliculaForm.get('genero')?.touched)) {
@@ -40,8 +39,7 @@
       </div>
     }
   </div>
-
-   <!-- Actores Disponibles -->
+  <!-- Actores Disponibles -->
   <div>
     <h3>Actores</h3>
     <div>
@@ -69,5 +67,6 @@
     </div>
   <!-- Submit Button -->
   <button type="submit" [disabled]="peliculaForm.invalid">Guardar Película</button>
+
 
 </form>

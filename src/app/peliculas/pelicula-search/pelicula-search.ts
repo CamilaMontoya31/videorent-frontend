@@ -27,6 +27,7 @@ export class PeliculaSearch {
   readonly loading = signal(false);
   readonly searched = signal(false);
   readonly error = signal<string | null>(null);
+  
  //testing
   buscar_profe():void{
     console.log("Buscando peliculas con titulo: ", 
@@ -35,40 +36,28 @@ export class PeliculaSearch {
   }
 
   buscar(): void {
-
-     console.log("Buscando peliculas con titulo: ", 
-      this.searchForm.get('titulo')?.value, 
-      " y genero: ", this.searchForm.get('genero')?.value);
-
     const { titulo, genero } = this.searchForm.getRawValue();
 
     this.loading.set(true);
     this.searched.set(true);
     this.error.set(null);
 
-    //study ppt con las definiciones
     this.peliculaService
       .findMovies(titulo.trim(), genero.trim())
       .pipe(
-        //se intersecan dos errores
-        takeUntilDestroyed(this.destroyRef), //desecha la coleccion que viene del search
+        takeUntilDestroyed(this.destroyRef),
         catchError(() => {
           this.error.set('No se pudieron cargar las películas.');
           return of([] as Pelicula[]);
         }),
         finalize(() => this.loading.set(false))
       )
-      .subscribe(peliculas => {this.resultados.set(peliculas)
-      console.log("Colletion: ", peliculas);
-      console.log("Signal actualizada: ", this.error());
-    
-    });
-     // peliculas collection 
-  
-     
+      .subscribe((peliculas) => this.resultados.set(peliculas)); 
+      console.log(this.resultados());
+      console.log(this.error());
   }
 
-  limpiar(): void {
+   limpiar(): void {
     this.searchForm.reset({ titulo: '', genero: '' });
     this.resultados.set([]);
     this.loading.set(false);
@@ -76,10 +65,8 @@ export class PeliculaSearch {
     this.error.set(null);
   }
 
-  //interesante el _ yellow
-  trackByPeliculaId(_: number, pelicula: Pelicula): number {
-    return pelicula.peliculaId ?? _;
-    // return pelicula.peliculaId; en ppt
+  trackByPeliculaId(index: number, pelicula: Pelicula): number {
+    return pelicula.peliculaId ?? index;
   }
 }
 

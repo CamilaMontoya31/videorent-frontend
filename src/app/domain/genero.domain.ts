@@ -1,8 +1,8 @@
 export class Genero{
-    generoId?:number;
-    nombreGenero?:string;
+    id?:number;
+    nombre?:string;
     constructor(id:number, nombre:string){
-        this.generoId = id;
-        this.nombreGenero = nombre;
+        this.id = id;
+        this.nombre = nombre;
     }
 }

@@ -1,32 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Genero } from '../../domain/genero.domain';
 import { Actor } from '../../domain/actor.domain';
 import { PeliculaService } from '../../services/pelicula.service';
-import { GeneroService } from '../../services/genero.service';
 import { ActorService } from '../../services/actor.service';
+import { GeneroService } from '../../services/genero.service';
 
 @Component({
   selector: 'app-pelicula-insert-reactive.component',
-  standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './pelicula-insert-reactive.component.html',
   styleUrl: './pelicula-insert-reactive.component.css',
-
 })
-export class PeliculaInsertReactiveComponent implements OnInit {
- 
-   // Referencia al elemento HTML nativo <select>
-  @ViewChild('actorSelect') actorSelectRef!: ElementRef<HTMLSelectElement>;
+export class PeliculaInsertReactiveComponent {
   peliculaForm!: FormGroup;
   generos: Genero[] = [];
   actoresDisponibles: Actor[] = [];
   actoresPelicula: Actor[] = [];
   selectedActorId: number | undefined; // ID del actor por agregar (SELECT)
 
-  // esto implica que puedo verlos en toda la
-constructor(
+  constructor(
     private fb: FormBuilder,
     private peliculaService: PeliculaService,
     private actorService: ActorService,
@@ -49,14 +43,21 @@ constructor(
       next: (data) => this.generos = data,
       error: (error) => console.error('Error loading generos:', error) // TODO *
     });
+    console.log("Generos cargados:", this.generos);
   }
-  loadActores() {
+   loadActores() {
     this.actorService.getActores().subscribe({
-      next: (data) => this.actoresDisponibles = data,
+      next: (data) => {
+        this.actoresDisponibles = data;
+        this.actoresDisponibles.forEach(actor =>
+          console.log(`Actor ${actor.id}: ${actor.nombre} ${actor.apellidos}`)
+        );
+      },
       error: (error) => console.error('Error loading actores:', error) // TODO *
     });
   }
- onSubmit() {
+
+  onSubmit() {
     if (this.peliculaForm.valid) {
       console.log('Form Submitted! Data:', this.toJson());
       this.peliculaService.guardarPelicula(this.toJson()).subscribe({
@@ -67,8 +68,7 @@ constructor(
       console.log('Form is invalid'); // TODO *
     }
   }
-  
-    toJson(): Object {
+  toJson(): Object {
     const formValue = this.peliculaForm.value;
     let actores: { actorId: number }[] = [];
     actores = formValue.actores.map((actor: { id: number }) =>
@@ -87,7 +87,7 @@ constructor(
     };
    
  }
-  addActor() {
+ addActor() {
     if (this.selectedActorId) {
       const currentActors = this.peliculaForm.get('actores')?.value as Actor[];
       const actorToAdd = this.actoresDisponibles.find(actor => actor.id === this.selectedActorId);
@@ -114,5 +114,4 @@ constructor(
     this.selectedActorId  = parseInt(selectElement.value);
     console.log('Selected ID on change:', this.selectedActorId);
   }
-  
 }

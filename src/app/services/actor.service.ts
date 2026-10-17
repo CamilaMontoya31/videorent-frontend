@@ -8,16 +8,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ActorService {
-  private http = inject(HttpClient); // inyección de HttpClient
+ private http = inject(HttpClient); // inyección de HttpClient
   private url:string = environment.API_URL;
  
-  actores = this.http.get<Actor[]>(`${this.url}actores`);
-
+  // Patrón reactivo para obtener los actores
+  // HttpClient.get devuelve un Observable, lo que permite suscribirse a los cambios de datos en tiempo real
+  // PRIMERA OPCIÓN
+  //actores = this.http.get<Actor[]>(`${this.url}actores`);
+ 
   constructor() { }
-
-  // Método para obtener los actores de manera reactiva
+ 
+  // COMPLEMENTA LA PRIMERA OPCIÓN
   getActores(): Observable<Actor[]> {
-    return this.actores;
+    return this.http.get<Actor[]>(`${this.url}actores`);
   }
 
 }

@@ -1,6 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Pelicula } from '../domain/pelicula.domain';
  
@@ -25,8 +25,20 @@ return this.http
 .pipe(map(response => response ?? []));
 }
    // Method to save a new pelicula
-  guardarPelicula(pelicula: any): Observable<any> { // Usar 'any' o la interface Pelicula
-    return this.http.post<any>(this.apiUrl, pelicula);
+
+  // Método modificado con catchError
+  guardarPelicula(pelicula: any): Observable<any> { 
+    return this.http.post<any>(this.apiUrl, pelicula).pipe(
+      catchError(this.handleError) // Intercepta el error aquí
+    );
   }
- 
+
+  // Método privado para procesar el error
+  private handleError(error: HttpErrorResponse) {
+    console.error('Ocurrió un error en el servicio:', error);
+    // Retorna un error observable con un mensaje amigable para el componente
+    return throwError(() => new Error('Error al comunicarse con el servidor.'));
+  }
+  
+
 }

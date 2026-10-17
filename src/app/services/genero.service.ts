@@ -12,14 +12,13 @@ export class GeneroService {
   private url:string = environment.API_URL;
   // Patrón reactivo para obtener los géneros
   // HttpClient.get devuelve un Observable, lo que permite suscribirse a los cambios de datos en tiempo real
-  
-  //primera opción
-  generos = this.http.get<Genero[]>(`${this.url}generos`);
-
-  constructor() { }
-  
+  // PRIMERA OPCIÓN
+ 
+  constructor() {  }
+ 
   // Método para obtener los géneros de manera reactiva
+  // COMPLEMENTA LA PRIMERA OPCIÓN
   getGeneros(): Observable<Genero[]> {
-    return this.generos;
+    return this.http.get<Genero[]>(`${this.url}generos`);
   }
  }

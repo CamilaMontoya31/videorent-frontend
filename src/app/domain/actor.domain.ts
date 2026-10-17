@@ -5,7 +5,7 @@ export class Actor{
     
     constructor(id:number, nombre:string, apellidos: string){
         this.id = id;
-        this.actor = nombre;
+        this.nombre = nombre;
         this.apellidos = apellidos;
     }
 }
